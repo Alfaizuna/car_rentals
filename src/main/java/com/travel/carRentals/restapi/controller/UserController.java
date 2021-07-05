@@ -38,12 +38,12 @@ public class UserController {
     public String generateToken(@RequestBody AuthRequest authRequest) throws Exception {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUser(), authRequest.getPwd())
+                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
             );
         } catch (Exception ex) {
             throw new Exception("invalid username / password");
         }
-        return jwtUtil.generateToken(authRequest.getUser());
+        return jwtUtil.generateToken(authRequest.getUsername());
     }
 
     @PostMapping("/register")
@@ -52,8 +52,8 @@ public class UserController {
             String username = "^([a-zA-Z0-9]+(?:[._+-][a-zA-Z0-9]+)*)@([a-zA-Z0-9]+(?:[.-][a-zA-Z0-9]+)*[.][a-zA-Z]{2,})";
             String pass = "^[a-zA-Z0-9@\\\\#$%&*()_+\\]\\[';:?.,!^-]{8,}$";
 
-            boolean usernameTrue = Pattern.matches(username, user.getUser());
-            boolean passwordTrue = Pattern.matches(pass, user.getPwd());
+            boolean usernameTrue = Pattern.matches(username, user.getUsername());
+            boolean passwordTrue = Pattern.matches(pass, user.getPassword());
 
             if (usernameTrue && passwordTrue) {
                 restApiSend.insertUser(new Gson().toJson(user));
@@ -66,7 +66,7 @@ public class UserController {
             return new ResponseEntity<>(new CustomErrorType(new Gson().toJson("there are any login session, please logout first")), HttpStatus.NOT_FOUND);
         }
 
-        Response response = new Response("Registrasi " + user.getName() + " Berhasil!");
+        Response response = new Response("Registrasi " + user.getUsername() + " Berhasil!");
         return new ResponseEntity<>(new Gson().toJson(response), HttpStatus.OK);
     }
 

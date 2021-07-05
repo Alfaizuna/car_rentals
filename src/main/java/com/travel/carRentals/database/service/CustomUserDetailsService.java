@@ -21,11 +21,11 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = null;
 //        try {
 //            user = myBatisService.findByUser(username);
-            user.setUser("izun@yahoo.com");
-            user.setPwd("udin321@");
+            user.setUsername("izun@yahoo.com");
+            user.setPassword("udin321@");
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
-        return new org.springframework.security.core.userdetails.User(user.getUser(), user.getPwd(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
 }
