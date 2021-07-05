@@ -1,0 +1,59 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="User">
+
+    <insert id = "register" parameterType = "com.travel.carRentals.database.model.User">
+        INSERT INTO users (name, user, pwd) VALUES (#{name}, #{user}, #{pwd});
+    </insert>
+
+    <!-- RESULT    -->
+<!--    <resultMap id = "result" type = "com.travel.carRentals.database.model.User">-->
+<!--        <result property = "user" column = "USER"/>-->
+<!--        <result property = "pwd" column = "PWD"/>-->
+<!--    </resultMap>-->
+
+<!--    &lt;!&ndash; LOGIN   &ndash;&gt;-->
+<!--    <select id="login" parameterType="Map" resultMap="result">-->
+<!--        SELECT * from users where email = #{email} And password = #{password};-->
+<!--    </select>-->
+
+<!--    <select id="findByName" parameterType="com.travel.carRentals.database.model.User" resultType="String">-->
+<!--        select * from users where user like #{user} ;-->
+<!--    </select>-->
+
+    <select id="findByUser" parameterType="String" resultType="com.travel.carRentals.database.model.User">
+        SELECT
+        id as id,
+        user as user,
+        pwd,
+        FROM USERS
+        WHERE user = #{user}
+    </select>
+
+    <!--Mencari id_siswa dengan kondisi nama dan alamat-->
+<!--    <select id="getId" parameterType = "com.siswarabbitmq.database.model.Siswa" resultType="String">-->
+<!--        SELECT id_siswa FROM siswa WHERE nama = #{nama} AND address = #{address};-->
+<!--    </select>-->
+
+<!--    &lt;!&ndash;Memasukan data ke tabel nilai&ndash;&gt;-->
+<!--    <insert id = "insertNilai" parameterType = "map">-->
+<!--        INSERT INTO nilai (id_siswa, fisika, kalkulus, biologi) VALUES (#{id_siswa}, #{fisika}, #{kalkulus}, #{biologi});-->
+<!--    </insert>-->
+
+<!--    &lt;!&ndash;Menghapus record berdasarkan id    &ndash;&gt;-->
+<!--    <delete id = "deleteSiswaById" parameterType = "long">-->
+<!--        DELETE FROM siswa WHERE id_siswa = #{id};-->
+<!--    </delete>-->
+
+<!--    &lt;!&ndash;Menghapus record berdasarkan id    &ndash;&gt;-->
+<!--    <delete id = "deleteNilaiById" parameterType = "long">-->
+<!--        DELETE FROM nilai WHERE id_siswa = #{id};-->
+<!--    </delete>-->
+
+<!--    <update id = "updateSiswaById" parameterType = "com.siswarabbitmq.database.model.Siswa">-->
+<!--        UPDATE siswa SET nama = #{nama}, address = #{address}, status = #{status} WHERE id_siswa = #{id_siswa};-->
+<!--    </update>-->
+
+</mapper>
