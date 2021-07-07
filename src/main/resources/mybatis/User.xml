@@ -5,31 +5,12 @@
 <mapper namespace="User">
 
     <insert id = "register" parameterType = "com.travel.carRentals.database.model.User">
-        INSERT INTO users (name, user, pwd) VALUES (#{name}, #{user}, #{pwd});
+        INSERT INTO users (username, password, email) VALUES (#{username}, #{password}, #{email});
     </insert>
 
-    <!-- RESULT    -->
-<!--    <resultMap id = "result" type = "com.travel.carRentals.database.model.User">-->
-<!--        <result property = "user" column = "USER"/>-->
-<!--        <result property = "pwd" column = "PWD"/>-->
-<!--    </resultMap>-->
-
-<!--    &lt;!&ndash; LOGIN   &ndash;&gt;-->
-<!--    <select id="login" parameterType="Map" resultMap="result">-->
-<!--        SELECT * from users where email = #{email} And password = #{password};-->
-<!--    </select>-->
-
-<!--    <select id="findByName" parameterType="com.travel.carRentals.database.model.User" resultType="String">-->
-<!--        select * from users where user like #{user} ;-->
-<!--    </select>-->
-
-    <select id="findByUser" parameterType="String" resultType="com.travel.carRentals.database.model.User">
-        SELECT
-        id as id,
-        user as user,
-        pwd,
-        FROM USERS
-        WHERE user = #{user}
+    <select id="findByUser" parameterType="java.lang.String" resultType="com.travel.carRentals.database.model.User">
+--         <!--select * from user where username like #{username};-->
+         select * from users where username like #{username};
     </select>
 
     <!--Mencari id_siswa dengan kondisi nama dan alamat-->

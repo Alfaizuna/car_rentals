@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 
 @Service
@@ -19,13 +20,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = null;
-//        try {
-//            user = myBatisService.findByUser(username);
-            user.setUsername("izun@yahoo.com");
-            user.setPassword("udin321@");
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+        try {
+           user = myBatisService.findByUser(username);
+//           user = new Gson().fromJson(userString, User.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), new ArrayList<>());
     }
 }

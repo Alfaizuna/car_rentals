@@ -1,10 +1,10 @@
 package com.travel.carRentals.restapi.util;
 
-public class Response {
+public class CommonResponse {
 
     private String message;
 
-    public Response(String message) {
+    public CommonResponse(String message) {
         this.message = message;
     }
 

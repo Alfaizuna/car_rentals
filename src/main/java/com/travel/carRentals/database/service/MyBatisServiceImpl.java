@@ -2,6 +2,7 @@ package com.travel.carRentals.database.service;
 
 import com.google.gson.Gson;
 import com.travel.carRentals.database.model.User;
+import com.travel.carRentals.restapi.util.CommonMessage;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -16,10 +17,9 @@ import java.util.concurrent.TimeoutException;
 public class MyBatisServiceImpl {
 
     private SqlSession session;
-//    Send send = new Send();
 
     public void connectMyBatis() throws IOException {
-        Reader reader = Resources.getResourceAsReader("SqlMapConfig.xml");
+        Reader reader = Resources.getResourceAsReader(CommonMessage.SQL);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         session = sqlSessionFactory.openSession();
     }
@@ -31,15 +31,16 @@ public class MyBatisServiceImpl {
         connectMyBatis();
         session.insert("User.register", user);
         session.commit();
+        session.close();
     }
 
     public User findByUser(String user) throws IOException {
         System.out.println("find by user");
         connectMyBatis();
-        User usr = new Gson().fromJson(user, User.class);
-        User user1 = session.selectOne("User.findByUser", usr);
-//        User user2 = new Gson().toJson(user1);
-        return user1;
+        User user2 = session.selectOne("User.findByUser", user);
+        session.commit();
+        session.close();
+        return user2;
     }
 
 //    public void deleteSiswa(String idString) throws IOException, TimeoutException {
