@@ -22,7 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = null;
         try {
            user = myBatisService.findByUser(username);
-//           user = new Gson().fromJson(userString, User.class);
         } catch (IOException e) {
             e.printStackTrace();
         }

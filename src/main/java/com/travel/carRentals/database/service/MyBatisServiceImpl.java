@@ -34,10 +34,50 @@ public class MyBatisServiceImpl {
         session.close();
     }
 
+    public User saveToken(User user) throws IOException, TimeoutException {
+        connectMyBatis();
+        String token = new Gson().toJson(user, User.class);
+        session.insert("User.saveToken", token);
+        session.commit();
+        session.close();
+        return user;
+    }
+
+    public User savePassword(User user) throws IOException, TimeoutException {
+        connectMyBatis();
+        String token = new Gson().toJson(user, User.class);
+        session.insert("User.saveToken", token);
+        session.commit();
+        session.close();
+        return user;
+    }
+
     public User findByUser(String user) throws IOException {
         System.out.println("find by user");
+//        User user1 = new Gson().fromJson(user, User.class);
         connectMyBatis();
-        User user2 = session.selectOne("User.findByUser", user);
+        User user1 = new Gson().fromJson(user, User.class);
+        user1.setTokenCreationDate(null);
+        User user2 = session.selectOne("User.findByUser", user1);
+        System.out.println("found");
+        session.commit();
+        session.close();
+        return user2;
+    }
+
+    public User findByEmail(String email) throws IOException {
+        System.out.println("find by email");
+        connectMyBatis();
+        User user2 = session.selectOne("User.findByEmail", email);
+        session.commit();
+        session.close();
+        return user2;
+    }
+
+    public User findByToken(String token) throws IOException {
+        System.out.println("find by email");
+        connectMyBatis();
+        User user2 = session.selectOne("User.findByEmail", token);
         session.commit();
         session.close();
         return user2;

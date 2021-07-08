@@ -4,37 +4,52 @@
 
 <mapper namespace="User">
 
-    <insert id = "register" parameterType = "com.travel.carRentals.database.model.User">
-        INSERT INTO users (username, password, email) VALUES (#{username}, #{password}, #{email});
+    <insert id="register" parameterType="com.travel.carRentals.database.model.User">
+        INSERT INTO users (username, password, email, token) VALUES (#{username}, #{password}, #{email},#{token});
     </insert>
 
-    <select id="findByUser" parameterType="java.lang.String" resultType="com.travel.carRentals.database.model.User">
---         <!--select * from user where username like #{username};-->
-         select * from users where username like #{username};
+    <select id="findByUser" parameterType="java.lang.Object" resultType="com.travel.carRentals.database.model.User">
+        select * from users where username like #{username};
     </select>
 
+    <select id="findByEmail" parameterType="java.lang.String" resultType="com.travel.carRentals.database.model.User">
+        select * from users where email like #{email};
+    </select>
+
+    <select id="findByToken" parameterType="java.lang.String" resultType="com.travel.carRentals.database.model.User">
+        select * from users where token like #{token};
+    </select>
+
+    <insert id="saveToken" parameterType="com.travel.carRentals.database.model.User">
+        INSERT INTO users (token, tokenCreationDate) VALUES (#{token},#{tokenCreationDate});
+    </insert>
+
+    <insert id="savePassword" parameterType="com.travel.carRentals.database.model.User">
+        INSERT INTO users (password, token, tokenCreationDate) VALUES (#{password},#{token},#{tokenCreationDate});
+    </insert>
+
     <!--Mencari id_siswa dengan kondisi nama dan alamat-->
-<!--    <select id="getId" parameterType = "com.siswarabbitmq.database.model.Siswa" resultType="String">-->
-<!--        SELECT id_siswa FROM siswa WHERE nama = #{nama} AND address = #{address};-->
-<!--    </select>-->
+    <!--    <select id="getId" parameterType = "com.siswarabbitmq.database.model.Siswa" resultType="String">-->
+    <!--        SELECT id_siswa FROM siswa WHERE nama = #{nama} AND address = #{address};-->
+    <!--    </select>-->
 
-<!--    &lt;!&ndash;Memasukan data ke tabel nilai&ndash;&gt;-->
-<!--    <insert id = "insertNilai" parameterType = "map">-->
-<!--        INSERT INTO nilai (id_siswa, fisika, kalkulus, biologi) VALUES (#{id_siswa}, #{fisika}, #{kalkulus}, #{biologi});-->
-<!--    </insert>-->
+    <!--    &lt;!&ndash;Memasukan data ke tabel nilai&ndash;&gt;-->
+    <!--    <insert id = "insertNilai" parameterType = "map">-->
+    <!--        INSERT INTO nilai (id_siswa, fisika, kalkulus, biologi) VALUES (#{id_siswa}, #{fisika}, #{kalkulus}, #{biologi});-->
+    <!--    </insert>-->
 
-<!--    &lt;!&ndash;Menghapus record berdasarkan id    &ndash;&gt;-->
-<!--    <delete id = "deleteSiswaById" parameterType = "long">-->
-<!--        DELETE FROM siswa WHERE id_siswa = #{id};-->
-<!--    </delete>-->
+    <!--    &lt;!&ndash;Menghapus record berdasarkan id    &ndash;&gt;-->
+    <!--    <delete id = "deleteSiswaById" parameterType = "long">-->
+    <!--        DELETE FROM siswa WHERE id_siswa = #{id};-->
+    <!--    </delete>-->
 
-<!--    &lt;!&ndash;Menghapus record berdasarkan id    &ndash;&gt;-->
-<!--    <delete id = "deleteNilaiById" parameterType = "long">-->
-<!--        DELETE FROM nilai WHERE id_siswa = #{id};-->
-<!--    </delete>-->
+    <!--    &lt;!&ndash;Menghapus record berdasarkan id    &ndash;&gt;-->
+    <!--    <delete id = "deleteNilaiById" parameterType = "long">-->
+    <!--        DELETE FROM nilai WHERE id_siswa = #{id};-->
+    <!--    </delete>-->
 
-<!--    <update id = "updateSiswaById" parameterType = "com.siswarabbitmq.database.model.Siswa">-->
-<!--        UPDATE siswa SET nama = #{nama}, address = #{address}, status = #{status} WHERE id_siswa = #{id_siswa};-->
-<!--    </update>-->
+    <!--    <update id = "updateSiswaById" parameterType = "com.siswarabbitmq.database.model.Siswa">-->
+    <!--        UPDATE siswa SET nama = #{nama}, address = #{address}, status = #{status} WHERE id_siswa = #{id_siswa};-->
+    <!--    </update>-->
 
 </mapper>

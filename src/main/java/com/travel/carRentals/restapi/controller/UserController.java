@@ -4,6 +4,7 @@ package com.travel.carRentals.restapi.controller;
 import com.google.gson.Gson;
 import com.travel.carRentals.database.model.AuthRequest;
 import com.travel.carRentals.database.model.User;
+import com.travel.carRentals.database.service.UserService;
 import com.travel.carRentals.restapi.payload.response.LoginResponse;
 import com.travel.carRentals.restapi.rabbitmq.RestApiSend;
 import com.travel.carRentals.restapi.util.CustomErrorType;
@@ -16,6 +17,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 import java.util.regex.Pattern;
 
 @RestController
@@ -24,6 +27,9 @@ public class UserController {
 
     @Autowired
     RestApiSend restApiSend;
+
+    @Autowired
+    UserService userService;
 
     @Autowired
     private JwtUtil jwtUtil;
@@ -77,9 +83,19 @@ public class UserController {
         return new ResponseEntity<>(new Gson().toJson(commonResponse), HttpStatus.OK);
     }
 
-    @PostMapping("/recovery")
-    public ResponseEntity<?> passwordRecovery(@RequestParam String email) {
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestParam String email) throws IOException, TimeoutException {
 
-        return null;
+        String response = userService.forgotPassword(email);
+
+        if (!response.startsWith("Invalid")) {
+            response = "http://localhost:8080/reset-password?token=" + response;
+        }
+        return response;
+    }
+
+    @PutMapping("/reset-password")
+    public String resetPassword(@RequestParam String token, @RequestParam String password) throws IOException, TimeoutException {
+        return userService.resetPassword(token, password);
     }
 }
