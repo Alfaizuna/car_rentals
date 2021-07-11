@@ -1,0 +1,159 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Order">
+
+    <insert id="saveOrder" parameterType="com.travel.carRentals.database.model.Order">
+        INSERT INTO orders (
+        idCar,
+        brand,
+        carName,
+        carType,
+        amountOfPassenger,
+        amountOfLuggage,
+        pricePerDay,
+        driver,
+        startDateAndTime,
+        endDateAndTime,
+        city,
+        vendorName,
+        carStatus,
+        paymentStatus,
+        paymentMethod,
+        review,
+        rating,
+        baseRating,
+        refund,
+        cleanTrip,
+        reschedule,
+        imageLink,
+        OrderStatus,
+        takenLocation,
+        givenLocation,
+        isDeleted
+        )
+        VALUES (
+        #{idCar},
+        #{brand},
+        #{carName},
+        #{carType},
+        #{amountOfPassenger},
+        #{amountOfLuggage},
+        #{pricePerDay},
+        #{driver},
+        #{startDateAndTime},
+        #{endDateAndTime},
+        #{city},
+        #{vendorName},
+        #{carStatus},
+        #{paymentStatus},
+        #{paymentMethod},
+        #{review},
+        #{rating},
+        #{baseRating},
+        #{refund},
+        #{cleanTrip},
+        #{reschedule},
+        #{imageLink},
+        #{OrderStatus},
+        #{takenLocation},
+        #{givenLocation},
+        #{isDeleted}
+        );
+    </insert>
+
+    <resultMap id="result" type="com.travel.carRentals.database.model.Order">
+        <result property="idOrder" column="idOrder"/>
+        <result property="idCar" column="idCar"/>
+        <result property="brand" column="brand"/>
+        <result property="carName" column="carName"/>
+        <result property="carType" column="carType"/>
+        <result property="amountOfPassenger" column="amountOfPassenger"/>
+        <result property="amountOfLuggage" column="amountOfLuggage"/>
+        <result property="pricePerDay" column="pricePerDay"/>
+        <result property="driver" column="driver"/>
+        <result property="startDateAndTime" column="startDateAndTime"/>
+        <result property="endDateAndTime" column="endDateAndTime"/>
+        <result property="city" column="city"/>
+        <result property="vendorName" column="vendorName"/>
+        <result property="carStatus" column="carStatus"/>
+        <result property="paymentStatus" column="paymentStatus"/>
+        <result property="paymentMethod" column="paymentMethod"/>
+        <result property="review" column="review"/>
+        <result property="rating" column="rating"/>
+        <result property="baseRating" column="baseRating"/>
+        <result property="refund" column="refund"/>
+        <result property="cleanTrip" column="cleanTrip"/>
+        <result property="reschedule" column="reschedule"/>
+        <result property="imageLink" column="imageLink"/>
+        <result property="OrderStatus" column="OrderStatus"/>
+        <result property="takenLocation" column="takenLocation"/>
+        <result property="givenLocation" column="givenLocation"/>
+    </resultMap>
+
+
+    <select id="getOrderById" parameterType="long" resultMap="result">
+        SELECT * FROM orders WHERE idOrder = #{idOrder};
+    </select>
+
+    <update id="updateOrder" parameterType = "com.travel.carRentals.database.model.Order">
+        UPDATE ORDERS SET BRAND = #{brand},
+        idCar=#{idCar},
+        carName=#{carName},
+        carType=#{carType},
+        amountOfPassenger=#{amountOfPassenger},
+        amountOfLuggage=#{amountOfLuggage},
+        pricePerDay=#{pricePerDay},
+        driver=#{driver},
+        startDateAndTime=#{startDateAndTime},
+        endDateAndTime=#{endDateAndTime},
+        city=#{city},
+        vendorName=#{vendorName},
+        carStatus=#{carStatus},
+        paymentStatus=#{paymentStatus},
+        paymentMethod=#{paymentMethod},
+        review=#{review},
+        rating=#{rating},
+        baseRating=#{baseRating},
+        refund=#{refund},
+        cleanTrip=#{cleanTrip},
+        reschedule=#{reschedule},
+        imageLink=#{imageLink},
+        OrderStatus=#{OrderStatus},
+        takenLocation=#{takenLocation},
+        givenLocation=#{givenLocation},
+        isDeleted=#{isDeleted}
+        WHERE idOrder = #{idOrder};
+    </update>
+
+    <update id="payment" parameterType = "com.travel.carRentals.database.model.Order">
+        UPDATE ORDERS SET BRAND = #{brand},
+        idCar=#{idCar},
+        carName=#{carName},
+        carType=#{carType},
+        amountOfPassenger=#{amountOfPassenger},
+        amountOfLuggage=#{amountOfLuggage},
+        pricePerDay=#{pricePerDay},
+        driver=#{driver},
+        startDateAndTime=#{startDateAndTime},
+        endDateAndTime=#{endDateAndTime},
+        city=#{city},
+        vendorName=#{vendorName},
+        carStatus=#{carStatus},
+        paymentStatus=#{paymentStatus},
+        paymentMethod=#{paymentMethod},
+        review=#{review},
+        rating=#{rating},
+        baseRating=#{baseRating},
+        refund=#{refund},
+        cleanTrip=#{cleanTrip},
+        reschedule=#{reschedule},
+        imageLink=#{imageLink},
+        OrderStatus=#{OrderStatus},
+        takenLocation=#{takenLocation},
+        givenLocation=#{givenLocation},
+        isDeleted=#{isDeleted}
+        WHERE idOrder = #{idOrder};
+    </update>
+</mapper>

@@ -4,6 +4,7 @@ package com.travel.carRentals.restapi.controller;
 import com.google.gson.Gson;
 import com.travel.carRentals.database.model.AuthRequest;
 import com.travel.carRentals.database.model.User;
+import com.travel.carRentals.database.service.UserService;
 import com.travel.carRentals.restapi.payload.response.LoginResponse;
 import com.travel.carRentals.restapi.rabbitmq.RestApiSend;
 import com.travel.carRentals.restapi.util.CustomErrorType;
@@ -14,8 +15,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 @RestController
@@ -27,12 +34,16 @@ public class UserController {
 
     @Autowired
     private JwtUtil jwtUtil;
+
     @Autowired
     private AuthenticationManager authenticationManager;
 
+    @Autowired
+    UserService userService;
+
     @GetMapping("/welcome")
     public String welcome() {
-        return "Welcome to Traveloka Car Rentals!!!";
+        return "Welcome to Aulia Car Rentals system!!!";
     }
 
     @PostMapping("/login")
@@ -77,9 +88,28 @@ public class UserController {
         return new ResponseEntity<>(new Gson().toJson(commonResponse), HttpStatus.OK);
     }
 
-    @PostMapping("/recovery")
-    public ResponseEntity<?> passwordRecovery(@RequestParam String email) {
+    @PostMapping("/forgot-password")
+    public String forgotPassword(@RequestParam String email) throws IOException {
 
-        return null;
+        String response = userService.forgotPassword(email);
+
+        if (!response.startsWith("Invalid")) {
+            response = "http://localhost:8080/car/reset-password?token=" + response;
+        }
+        return response;
+    }
+
+    @PutMapping("/reset-password")
+    public String resetPassword(@RequestParam String token, @RequestParam String password) throws IOException {
+        return userService.resetPassword(token, password);
+    }
+
+    @RequestMapping(value="/logout", method = RequestMethod.GET)
+    public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        if (auth != null){
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+//        }
+        return "berhasil-logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 }

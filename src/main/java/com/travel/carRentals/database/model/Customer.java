@@ -1,25 +1,25 @@
 package com.travel.carRentals.database.model;
 
-import lombok.*;
 
-import javax.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDateTime;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User {
+public class Customer {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private Long id;
-    private String username;
-    private String password;
+    private Long idCustomer;
+    private String fullname;
     private String email;
-    private String token;
-    private String tokenCreationDate;
+
 }
