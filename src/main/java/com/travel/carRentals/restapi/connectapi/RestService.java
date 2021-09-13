@@ -32,7 +32,7 @@ public class RestService {
     }
 
     public CarResponse[] getCars() {
-        String url = "http://localhost:8081/rent/getAvailableCars";
+        String url = "http://localhost:8082/rent/getAvailableCars";
         return this.restTemplate.getForObject(url, CarResponse[].class);
     }
 
@@ -42,7 +42,7 @@ public class RestService {
 //    }
 
     public ChooseOrderResponse[] getCarsByCity(@RequestBody ChooseOrderRequest chooseOrderRequest) {
-        String url = "http://localhost:8081/rent/chooseFirstOrder";
+        String url = "http://localhost:8082/rent/chooseFirstOrder";
 
         // create headers
         HttpHeaders headers = new HttpHeaders();
@@ -66,7 +66,7 @@ public class RestService {
     }
 
     public ChooseOrderByIdResponse getCarById(@RequestBody ChooseOrderByIdRequest chooseOrderByIdRequest) {
-        String url = "http://localhost:8081/rent/chooseFirstOrderById";
+        String url = "http://localhost:8082/rent/chooseFirstOrderById";
 
         // create headers
         HttpHeaders headers = new HttpHeaders();

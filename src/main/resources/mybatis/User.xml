@@ -20,10 +20,6 @@
         select * from users where token like #{token};
     </select>
 
-<!--    <insert id = "updateUser" parameterType = "com.travel.carRentals.database.model.User">-->
-<!--        INSERT INTO users (token) VALUES (#{token}) where email like #{email};-->
-<!--    </insert>-->
-
     <update id="updateUser" parameterType = "com.travel.carRentals.database.model.User">
             UPDATE USERS SET USERNAME = #{username},
             PASSWORD = #{password},

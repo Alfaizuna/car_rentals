@@ -48,7 +48,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/car/login",
                         "/car/register",
                         "/car/forgot-password",
-                        "/car/logout",
+                        "/car/logout/**",
                         "/car/reset-password/**").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
